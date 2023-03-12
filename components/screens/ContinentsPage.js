@@ -10,7 +10,7 @@ const ContinentsPage = () => {
 };
 
 const styles = StyleSheet.create({
-  continentcontainer: {
+  continentscontainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",

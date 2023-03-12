@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from 'react-native'
 const DashboardPage = () => {
   return (
     <View style={styles.dashboardcontainer}>
-        <Text>Dashb=oardPage</Text>
+        <Text style={styles.title}>Welcome Firstname Lastname</Text>
     </View>
   )
 }
@@ -12,9 +12,13 @@ const DashboardPage = () => {
 const styles = StyleSheet.create({
   dashboardcontainer: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
     backgroundColor: "#fff",
+    paddingHorizontal:15,
   },
+  title:{
+    fontSize:25,
+    fontWeight: 'bold',
+
+  }
 });
 export default DashboardPage
