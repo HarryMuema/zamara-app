@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, StyleSheet, Text, View } from "react-native";
 import ZamaraInputs from "../common/ZamaraInputs";
 import { Formik } from "formik";
+import ZamaraTable from "../common/ZamaraTable";
 
 const StaffPage = () => {
   const [loading, setLoading] = useState(false);
@@ -11,6 +12,7 @@ const StaffPage = () => {
   
   return (
     <View style={styles.staffcontainer}>
+      <ZamaraTable/>
       <Formik
         initialValues={{username:'', password:'',}}
         validate={values => {
