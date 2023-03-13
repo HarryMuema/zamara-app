@@ -15,12 +15,16 @@ const LoginPage = ({navigation}) => {
     const url = 'https://dummyjson.com/auth/login';
 
     await axios.post(url, values).then((response) => {
+      setLoading(true)
       const result = response.data
       ToastAndroid.show("Login Success", ToastAndroid.LONG)
       setSubmitting(false)
-      navigation.navigate('Menu',{result})
+      setLoading(false)
+      navigation.navigate('Menu',{screen: 'Home',params:{result}})
     }).catch(error => {
+      setLoading(true)
       ToastAndroid.show("Invalid Username or Password",ToastAndroid.LONG)
+      setLoading(false)
     })
   }
   return (

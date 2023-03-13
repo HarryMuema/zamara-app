@@ -2,29 +2,45 @@ import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, ToastAndroid, View } from 'react-native'
 import { NavigationActions } from '@react-navigation/native';
 
+import axios from "axios";
 
 const DashboardPage = ({route, navigation}) => {
-  const [data,setData] = useState(null)
-  const getParams = route.params
+  const [result,setResult] = useState({})
+  const { username } = route.params.result;
+
+  const getUserData = async () => {
+    const url = `https://dummyjson.com/users/search?q=${username}`;
+
+    await axios
+      .get(url)
+      .then((response) => {
+        const result = response.data;
+        setResult(result.users[0]);
+      })
+      .catch((error) => {
+        ToastAndroid.show("User not found", ToastAndroid.LONG);
+      });
+  };
+
   useEffect(() => {
-    setData(getParams)
+    getUserData();
   }, []);
-  console.log (getParams)
+  const { firstName, lastName, age, gender, email, phone, birthDate, bloodGroup, height, weight, eyeColor} = result;
 
   return (
     <View style={styles.dashboardcontainer}>
-      <Text style={styles.title}>Welcome  </Text>
-      <View style={{justifyContent:'center',alignItems:'center'}}>
+      <Text style={styles.title}>Welcome {firstName} {lastName} </Text>
+      <View style={{ justifyContent: "center", alignItems: "center" }}>
         <Text> Your profile details is as below </Text>
-        <Text style={styles.subtitle}>Age:</Text>
-        <Text style={styles.subtitle}>Gender : </Text>
-        <Text style={styles.subtitle}>Email : </Text>
-        <Text style={styles.subtitle}>Phone:</Text>
-        <Text style={styles.subtitle}>Birth Date:</Text>
-        <Text style={styles.subtitle}>Blood Group:</Text>
-        <Text style={styles.subtitle}>Height:</Text>
-        <Text style={styles.subtitle}>Weight:</Text>
-        <Text style={styles.subtitle}>Eye color:</Text>
+        <Text style={styles.subtitle}>Age : {age}</Text>
+        <Text style={styles.subtitle}>Gender : {gender}</Text>
+        <Text style={styles.subtitle}>Email : {email}</Text>
+        <Text style={styles.subtitle}>Phone : {phone}</Text>
+        <Text style={styles.subtitle}>Birth Date : {birthDate}</Text>
+        <Text style={styles.subtitle}>Blood Group : {bloodGroup}</Text>
+        <Text style={styles.subtitle}>Height : {height}</Text>
+        <Text style={styles.subtitle}>Weight : {weight}</Text>
+        <Text style={styles.subtitle}>Eye color : {eyeColor}</Text>
       </View>
     </View>
   );
