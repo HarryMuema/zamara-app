@@ -19,8 +19,8 @@ export default function App() {
             <Stack.Screen name="Login" component={LoginPage} options={{headerShown: false}}/>
             <Stack.Screen name="Menu" component={MenuScreen} options={{headerShown: false}}/>
             <Stack.Screen name="Home" component={DashboardPage} options={{headerShown: false}}/>
-            <Stack.Screen name="Staff" component={StaffPage} options={{headerShown: false}}/>
-            <Stack.Screen name="Continents" component={ContinentsPage} options={{headerShown: false}}/>
+            {/* <Stack.Screen name="Staff" component={StaffPage} options={{headerShown: false}}/> */}
+            {/* <Stack.Screen name="Continents" component={ContinentsPage} options={{headerShown: false}}/> */}
           </Stack.Navigator>
         </NavigationContainer>
       </View>
