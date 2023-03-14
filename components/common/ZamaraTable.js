@@ -1,18 +1,26 @@
 import React from "react";
-import { View, StyleSheet, ScrollView } from "react-native";
+import { View, StyleSheet, ScrollView, TouchableOpacity, Text, Alert } from "react-native";
 import { Table, TableWrapper, Row, Cell } from "react-native-table-component";
 
 const CONTENT = {
-  tableHead: ["Staff Number", "Staff Name", "Staff Email", "Department","Salary"],
-  tableData: [
-    ["1", "2", "3","4","5"],
-    ["a", "b", "c","d","e"],
-    ["1", "2", "3","4","5"],
-    ["a", "b", "c","d","e"],
-  ],
+  tableHead: ["Actions","Staff Number", "Staff Name", "Staff Email", "Department","Salary"],
 };
 
-export default function ZamaraTable() {
+export default function ZamaraTable({tableData,onDelete,onUpdate,disabled,updating,deleting}) {
+  const element = (data, index) => (
+    <View style={{flexDirection:'row', justifyContent:'center', alignItems:'center'}}>
+      <TouchableOpacity style={{marginRight:20, marginLeft:-40}} onPress={() => onUpdate(data)} disabled={disabled}>
+        <View style={styles.btn}>
+          {!updating? <Text style={styles.btnText}>Update</Text> : <Text style={styles.btnText}>Updating</Text>}
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity style={{marginRight:-40}} onPress={() => onDelete(data)} disabled={disabled}>
+        <View style={styles.btn}>
+          {!deleting? <Text style={styles.btnText}>Delete</Text> : <Text style={styles.btnText}>Deleting</Text>}
+        </View>
+      </TouchableOpacity>
+    </View>
+  );
   return (
     <View style={styles.container}>
       <ScrollView horizontal={true}>
@@ -20,18 +28,17 @@ export default function ZamaraTable() {
           <Table borderStyle={{ borderWidth: 1 }}>
             <Row
               data={CONTENT.tableHead}
-              // flexArr={[1, 1, 1, 1]}
-              widthArr={[100, 100, 100, 100, 100]}
+              widthArr={[160, 150, 155, 150, 150, 100]}
               style={styles.head}
               textStyle={styles.text}
             />
           </Table>
           <ScrollView style={styles.dataWrapper}>
             <Table borderStyle={{ borderWidth: 1 }}>
-              {CONTENT.tableData.map((rowData, index) => (
-                <TableWrapper style={styles.wrapper}>
+              {tableData?.map((rowData, index) => (
+                <TableWrapper key={index} style={styles.wrapper}>
                   {rowData.map((cellData,cellIndex) => (
-                    <Cell key={cellIndex} data={cellData} textStyle={styles.text} widthArr={[100, 100, 100, 100, 100]}/>
+                    <Cell key={cellIndex} data={cellIndex === 0? element(cellData,index) : cellData} textStyle={styles.text}  widthArr={[100, 100, 100, 150, 100, 100]}/>
                   ))}
                 </TableWrapper>
               ))}
@@ -57,13 +64,23 @@ const styles = StyleSheet.create({
   wrapper: {
     flexDirection: "row",
   },
-  dataWrapper: { 
-    marginTop: -1 
+  dataWrapper: {
+    marginTop: -1,
   },
   row: {
     height: 28,
   },
   text: {
     textAlign: "center",
+  },
+  btn: { 
+    width: 58, 
+    height: 18, 
+    backgroundColor: "#78B7BB", 
+    borderRadius: 2 
+  },
+  btnText: { 
+    textAlign: "center", 
+    color: "#fff" 
   },
 });
